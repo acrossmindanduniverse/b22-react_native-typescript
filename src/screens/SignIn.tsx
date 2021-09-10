@@ -1,12 +1,35 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text, TextInput, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import cheetah from '../assets/cheetah.png';
+import {useDispatch, useSelector} from 'react-redux';
+import {signIn, authToggleFunc} from '../redux/actions/users';
+import {TRootStore} from '../redux/store';
 
-const SignIn = props => {
+const SignIn = (props: any) => {
+  const [input, setInput] = React.useState({
+    email: '',
+    password: '',
+  });
+  const {errorSignIn} = useSelector((state: TRootStore) => state.users);
+  const dispatch = useDispatch();
+
+  const handleSignIn = () => {
+    dispatch(signIn(input));
+  };
+
+  React.useEffect(() => {
+    if (input.email === '' && input.password === '') {
+      setTimeout(() => {
+        dispatch(authToggleFunc());
+      }, 500);
+    }
+  }, [errorSignIn, input]);
+
   return (
-    <View style={{backgroundColor: '#fff', flex: 1}}>
+    <View style={{flex: 1}}>
       <Image
         source={cheetah}
         style={{height: '100%', width: '100%'}}
@@ -29,9 +52,27 @@ const SignIn = props => {
               but why would you do that, boy?
             </Text>
           </View>
+          <View style={{height: 40}}>
+            {errorSignIn !== '' && (
+              <View
+                style={{
+                  backgroundColor: '#000000a0',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text style={styles.errMsg}>{errorSignIn}</Text>
+              </View>
+            )}
+          </View>
           <View style={{paddingVertical: 20}}>
             <View style={styles.textInputContainer}>
               <TextInput
+                onChangeText={val =>
+                  setInput({
+                    ...input,
+                    email: val,
+                  })
+                }
                 style={styles.textInput}
                 placeholderTextColor="#f5f5f5"
                 placeholder="Email"
@@ -39,6 +80,12 @@ const SignIn = props => {
             </View>
             <View style={styles.textInputContainer}>
               <TextInput
+                onChangeText={val =>
+                  setInput({
+                    ...input,
+                    password: val,
+                  })
+                }
                 style={styles.textInput}
                 placeholderTextColor="#f5f5f5"
                 secureTextEntry={true}
@@ -46,11 +93,13 @@ const SignIn = props => {
               />
             </View>
             <View style={{padding: 15, marginVertical: 20}}>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity onPress={handleSignIn} style={styles.btn}>
                 <Text style={styles.btnText}>Go!</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('forgotPassword')}
+                onPress={() => {
+                  props.navigation.navigate('forgotPassword');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -83,6 +132,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
     color: '#f5f5f5',
     fontSize: 25,
+  },
+  errMsg: {
+    fontFamily: 'Poppins-Light',
+    fontSize: 18,
+    color: 'red',
   },
   textInputContainer: {
     padding: 12,

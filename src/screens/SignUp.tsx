@@ -15,11 +15,11 @@ import tomcruise from '../assets/tom.jpg';
 import {signUp, authToggleFunc, IAuthSignUp} from '../redux/actions/users';
 import {useDispatch, useSelector} from 'react-redux';
 import {Spinner, CustomAlert} from './../components/SuccesActions';
-import {IRootStore} from '../redux/store';
+import {TRootStore} from '../redux/store';
 
 const SignUp = (props: any) => {
   const dispatch = useDispatch();
-  const {authToggle} = useSelector((state: IRootStore) => state.users);
+  const {authToggle} = useSelector((state: TRootStore) => state.users);
   const [spinner, setSpinner] = React.useState(false);
   const [customAlert, setCustomAlert] = React.useState(false);
 

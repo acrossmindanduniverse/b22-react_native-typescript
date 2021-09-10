@@ -4,7 +4,7 @@ import {View, Text} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-export const AuthGoBack = props => {
+export const AuthGoBack = (props: any) => {
   return (
     <View
       style={{

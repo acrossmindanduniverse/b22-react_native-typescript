@@ -10,4 +10,4 @@ export default () => {
   return {store, persistor};
 };
 
-export type IRootStore = ReturnType<typeof rootReducer>;
+export type TRootStore = ReturnType<typeof rootReducer>;

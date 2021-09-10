@@ -4,13 +4,13 @@ import persistReducer from 'redux-persist/es/persistReducer';
 
 import users from './users';
 
-const persistAuth = {
+const persist = {
   storage: AsyncStorage,
   key: 'users',
 };
 
 const reducer = combineReducers({
-  users: persistReducer(persistAuth, users),
+  users: persistReducer(persist, users),
 });
 
 export default reducer;
