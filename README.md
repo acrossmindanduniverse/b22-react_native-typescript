@@ -21,7 +21,7 @@
 * Latest `NPM / YARN`
 
 **Backend repository link**
-[Backend](https://github.com/acrossmindanduniverse/b22-react_native-typescript)
+[Backend](https://github.com/acrossmindanduniverse/b22-node-typescript-backend)
 
 **Installing the app**
 ```
